@@ -6,11 +6,16 @@ import SignUp from "../pages/SignUp/SignUp";
 import About from "../pages/About/About";
 import Course from "../pages/Course/Course";
 import PrivateRoutes from "./PrivateRoutes";
+import UpdateCourse from "../pages/Course/Update/UpdateCourse";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import AddBlogs from "../Blogs/AddBlogs/AddBlogs";
+import AllBlogs from "../Blogs/AllBlogs/AllBlogs";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -34,20 +39,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "/course",
-        element: 
-          
-            <Course></Course>
-         
-        ,
+        element: <Course></Course>,
       },
-      // {
-      //   path: "/blog",
-      //   element: (
-      //     <PrivateRoutes>
-      //       <Course></Course>
-      //     </PrivateRoutes>
-      //   ),
-      // },
+      {
+        path:'/update/:_id',
+        element: <UpdateCourse></UpdateCourse>
+      },
+      {
+        path: '/addBlog',
+        element: <AddBlogs></AddBlogs>
+      },
+      {
+        path: '/blog',
+        element: <AllBlogs></AllBlogs>
+      }
     ],
   },
 ]);

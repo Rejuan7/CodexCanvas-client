@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -11,6 +11,7 @@ const Course = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const axiosPublic = useAxiosPublic();
+  
 
   const handleChange = (index, e) => {
     const { name, value, files } = e.target;
@@ -68,7 +69,7 @@ const Course = () => {
     if (res?.data?.acknowledged) {
       Swal.fire({
         title: "Success",
-        text: "Added to database successfully",
+        text: "Successfully added to the database",
         icon: "success",
         confirmButtonText: "Done",
       }).then(() => {
@@ -83,7 +84,8 @@ const Course = () => {
     return res?.data;
   };
   const {
-    data: myCourse,
+    data: myCourse = [],
+    refetch,
     isLoading,
     isPending,
   } = useQuery({
@@ -94,6 +96,28 @@ const Course = () => {
   if (isLoading || isPending) {
     return <Skeleton count={10}></Skeleton>;
   }
+
+  const handleDelete = async (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosPublic.delete(`/course/${_id}`);
+        console.log(res);
+
+        if (res.data.deletedCount > 0) {
+          refetch();
+          Swal.fire("Deleted!", "Your Course has been deleted.", "success");
+        }
+      }
+    });
+  };
 
   // const addCourses = () => {
   //   if (
@@ -126,7 +150,7 @@ const Course = () => {
   return (
     <div>
       <div className="max-w-4xl mx-auto p-6">
-      <hr className="mt-2 text-blue-500" />
+        <hr className="mt-2 text-blue-500" />
         <h1 className="text-center text-4xl font-bold text-gray-800">
           Our Courses
         </h1>
@@ -251,8 +275,22 @@ const Course = () => {
                 <span className="text-lg font-normal">Price</span> :{" "}
                 {course?.price}
               </p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
+              <div className="flex justify-between">
+                <div>
+                  <button className="btn p-2 btn-sm bg-green-500">
+                    Buy Now
+                  </button>
+                </div>
+                <div className="flex gap-5">
+                  <Link to={`/update/${course._id}`}>
+                    <div>
+                      <button className="btn btn-sm bg-yellow-500">Edit</button>
+                    </div>
+                  </Link>
+                  <div>
+                    <button onClick={()=>handleDelete(course._id)} className="btn btn-sm bg-red-500">Delete</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
