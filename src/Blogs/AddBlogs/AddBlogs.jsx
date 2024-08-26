@@ -47,8 +47,8 @@ const AddBlogs = () => {
   };
 
   return (
-    <div className="bg-[#11192BA8] py-20 mb-5  p-1 md:p-24  max-w-[1800px] m-auto">
-      <h2 className="text-3xl font-extrabold text-center md:mb-16 mb-8 mt-5 md:mt-10">
+    <div className="bg-[#11192BA8] py-20 mb-5  p-1 md:p-16  max-w-[1800px] m-auto">
+      <h2 className="text-3xl font-extrabold text-center mb-5">
         Add Blog
       </h2>
       <form onSubmit={handleAddBlog}>

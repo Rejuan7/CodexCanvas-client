@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const UpdateCourse = () => {
   const axiosPublic = useAxiosPublic();
-  const { _id } = useParams(); // Get the _id from the route
+  const { _id } = useParams(); 
   const navigate = useNavigate();
 
   const myCourseFn = async () => {

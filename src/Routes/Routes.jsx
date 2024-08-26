@@ -10,6 +10,7 @@ import UpdateCourse from "../pages/Course/Update/UpdateCourse";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import AddBlogs from "../Blogs/AddBlogs/AddBlogs";
 import AllBlogs from "../Blogs/AllBlogs/AllBlogs";
+import UpdateBlog from "../Blogs/UpdateBlog/UpdateBlog";
 
 export const router = createBrowserRouter([
   {
@@ -31,11 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: (
-          <PrivateRoutes>
-            <About></About>
-          </PrivateRoutes>
-        ),
+        element: <About></About>
       },
       {
         path: "/course",
@@ -52,6 +49,10 @@ export const router = createBrowserRouter([
       {
         path: '/blog',
         element: <AllBlogs></AllBlogs>
+      },
+      {
+        path: '/updateBlog/:_id',
+        element: <UpdateBlog></UpdateBlog>
       }
     ],
   },
